@@ -10,13 +10,25 @@ const project = mongoose.Schema(
       type: String,
       required: true,
     },
+    descriptionHeading: {
+      type: String,
+    },
+    challengesHeading: {
+      type: String,
+    },
     challenges: {
       type: String,
       default: null,
     },
+    solutionsHeading: {
+      type: String,
+    },
     solution: {
       type: String,
       default: null,
+    },
+    resultsHeading: {
+      type: String,
     },
     results: {
       type: String,

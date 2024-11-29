@@ -28,13 +28,13 @@ router.post("/delete-project/:id", deleteProject);
 router.post(
   "/edit-projects/:id",
   upload.fields([
-    { name: "selectedImages", maxCount: 5 },
     { name: "thumbnail", maxCount: 1 },
+    { name: "images", maxCount: 5 },
   ]),
   editProjects
 );
 router.get("/get-enquiries", getEnquiries);
 router.post("/delete-enquiry/:id", deleteEnquiry);
-router.post("/login",userAuth, adminLogin);
+router.post("/login", userAuth, adminLogin);
 
 module.exports = router;

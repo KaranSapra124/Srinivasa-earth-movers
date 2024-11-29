@@ -34,7 +34,17 @@ exports.adminLogin = async (req, res) => {
 
 // Projects
 exports.addProject = async (req, res) => {
-  const { title, description, challenges, solutions, results } = req.body;
+  const {
+    title,
+    description,
+    challenges,
+    solutions,
+    results,
+    resultsHeading,
+    solutionsHeading,
+    challengesHeading,
+    descriptionHeading,
+  } = req.body;
   const { thumbnail, images } = req.files;
 
   let imagesArr;
@@ -51,6 +61,10 @@ exports.addProject = async (req, res) => {
     challenges: challenges,
     solution: solutions,
     results: results,
+    challengesHeading: challengesHeading,
+    solutionHeading: solutionsHeading,
+    resultsHeading: resultsHeading,
+    descriptionHeading: descriptionHeading,
   });
   // //   console.log(thumbnail_url);
   return res.status(201).json({ message: "Added New Project!", newProject });
@@ -62,7 +76,11 @@ exports.getProjects = async (req, res) => {
   }
   return res
     .status(200)
-    .send({ message: "Projects Fetched Successfully!", projects: projects });
+    .send({
+      message: "Projects Fetched Successfully!",
+      projects: projects,
+      count: projects?.length,
+    });
 };
 exports.deleteProject = async (req, res) => {
   const { id } = req.params;
@@ -75,7 +93,7 @@ exports.deleteProject = async (req, res) => {
 exports.editProjects = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(req.files)
+    // console.log(req.body,'BODYYDYDYDY');
 
     // Extract files from the request
     // const { thumbnail, selectedImages } = req.files;
@@ -88,20 +106,24 @@ exports.editProjects = async (req, res) => {
       return res.status(404).send({ message: "Project not found!" });
     }
 
+    // if (!req.files.images) {
+    //   existingProject.images = req.body.images;
+    // }
     // Update the images if any selectedImages are provided
-    if (req?.files?.selectedImages && req.files.selectedImages.length > 0) {
+    if (req?.files?.images && req?.files?.images?.length > 0) {
       existingProject.images = [
         ...existingProject.images,
-        ...req.files.selectedImages.map((img) => img.filename),
+        ...req.files.images.map((img) => img.filename),
       ];
     }
 
     // Update the thumbnail if provided
     if (req?.files?.thumbnail) {
-      console.log(req.files.thumbnail,'THUMB')
+      console.log(req.files.thumbnail, "THUMB");
       existingProject.thumbnail = req.files.thumbnail[0].filename; // Assuming thumbnail is uploaded as an array
     }
 
+    console.log(req.body.images, "IMAGES");
     // Update other fields from req.body
     Object.assign(existingProject, req.body);
 
@@ -124,9 +146,11 @@ exports.getEnquiries = async (req, res) => {
   if (!queries) {
     return res.status(401).send({ message: "No Queries" });
   }
-  return res
-    .status(200)
-    .send({ message: "Enquiries fetched!", enquiries: queries });
+  return res.status(200).send({
+    message: "Enquiries fetched!",
+    enquiries: queries,
+    count: queries?.length,
+  });
 };
 exports.deleteEnquiry = async (req, res) => {
   const { id } = req.params;
