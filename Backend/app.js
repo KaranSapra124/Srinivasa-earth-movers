@@ -5,7 +5,7 @@ const adminRoutes = require("./routes/adminRoutes");
 const cors = require("cors");
 const path = require("path");
 const cookieParser = require("cookie-parser");
-
+require("dotenv").config()
 require("./utils/dbConfig")();
 app.use(cookieParser());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
@@ -14,7 +14,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "https://zesty-rugelach-986078.netlify.app/",
+    origin: process.env.FRONTEND_URL,
     credentials: true,
   })
 );
