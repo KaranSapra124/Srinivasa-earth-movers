@@ -46,7 +46,7 @@ exports.addProject = async (req, res) => {
   const newProject = await project.create({
     title: title,
     description: description,
-    thumbnail: thumbnail?.filenname,
+    thumbnail: thumbnail?.filename,
     images: imagesArr,
     challenges: challenges,
     solution: solutions,
@@ -75,6 +75,7 @@ exports.deleteProject = async (req, res) => {
 exports.editProjects = async (req, res) => {
   try {
     const { id } = req.params;
+    console.log(req.files)
 
     // Extract files from the request
     // const { thumbnail, selectedImages } = req.files;
@@ -97,6 +98,7 @@ exports.editProjects = async (req, res) => {
 
     // Update the thumbnail if provided
     if (req?.files?.thumbnail) {
+      console.log(req.files.thumbnail,'THUMB')
       existingProject.thumbnail = req.files.thumbnail[0].filename; // Assuming thumbnail is uploaded as an array
     }
 
