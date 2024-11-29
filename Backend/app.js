@@ -14,7 +14,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://zesty-rugelach-986078.netlify.app/",
     credentials: true,
   })
 );
